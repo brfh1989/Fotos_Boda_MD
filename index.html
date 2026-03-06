@@ -1,138 +1,132 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Boda - Comparte tus Fotos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-cream: #FDFBF7;
-            --color-gold: #C4A484;
-            --color-text: #4A3B31;
-            --color-bg-envelope: #EAE3D9;
-        }
+import React, { useState, useEffect } from 'react';
+import { Camera, Share2, Info, CheckCircle2, Heart } from 'lucide-react';
 
-        body {
-            background-color: var(--color-cream);
-            color: var(--color-text);
-            font-family: 'Cormorant Garamond', serif;
-            overflow-x: hidden;
-        }
+const App = () => {
+  const [loaded, setLoaded] = useState(false);
 
-        .script-font {
-            font-family: 'Alex Brush', cursive;
-        }
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
-        .body-font {
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 1px;
-        }
+  const albumUrl = "https://photos.app.goo.gl/r49tV3ZJgiWPYJ7Z6";
 
-        .texture-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
-            opacity: 0.4;
-            pointer-events: none;
-            z-index: 10;
-        }
+  return (
+    <div className="min-h-screen bg-[#FDFBF7] text-[#4A3B31] font-serif selection:bg-[#C4A484] selection:text-white relative overflow-x-hidden">
+      {/* Textura de papel sutil */}
+      <div 
+        className="fixed inset-0 pointer-events-none opacity-30 z-0"
+        style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/paper.png')" }}
+      ></div>
 
-        .monogram {
-            border: 1px solid var(--color-gold);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
-        }
+      {/* Hero Header */}
+      <div className="relative h-[35vh] w-full overflow-hidden shadow-md z-10">
+        <img 
+          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200" 
+          alt="Boda Decoración" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent"></div>
+      </div>
 
-        .btn-share {
-            background-color: var(--color-gold);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(196, 164, 132, 0.3);
-        }
-
-        .btn-share:active {
-            transform: scale(0.95);
-        }
-
-        .fade-in {
-            animation: fadeIn 1.5s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .divider {
-            width: 60px;
-            height: 1px;
-            background-color: var(--color-gold);
-            margin: 1.5rem auto;
-        }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
-    <div class="texture-overlay"></div>
-
-    <main class="max-w-md w-full z-20 fade-in">
-        <!-- Monograma -->
-        <div class="monogram">
-            <span class="script-font text-4xl text-[#C4A484]" style="margin-top: -5px;">MD</span>
+      <main className={`max-w-md mx-auto px-6 pb-20 relative z-20 transition-all duration-1000 transform ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        
+        {/* Monograma Flotante */}
+        <div className="flex justify-center -mt-12 mb-6">
+          <div className="w-24 h-24 bg-white border-2 border-[#C4A484] rounded-full flex items-center justify-center shadow-xl">
+            <span className="font-['Alex_Brush'] text-5xl text-[#C4A484] mt-[-4px]">MD</span>
+          </div>
         </div>
 
-        <h2 class="body-font text-xs uppercase tracking-[0.3em] mb-4 text-[#8C7A6B]">Nuestra Boda</h2>
-
-        <!-- Nombres -->
-        <h1 class="script-font text-5xl md:text-6xl mb-2 text-[#4A3B31]">
-            Maria Yutzil <br> 
-            <span class="text-4xl">&</span> <br>
-            Gilberto Daniel
-        </h1>
-
-        <div class="divider"></div>
-
-        <!-- Mensaje -->
-        <div class="px-4 mb-10">
-            <p class="text-xl italic mb-4">"Cada momento es un regalo, gracias por capturarlo con nosotros."</p>
-            <p class="body-font text-[10px] uppercase font-light leading-relaxed">
-                Ayúdanos a guardar cada recuerdo de este día especial subiendo tus fotos al álbum compartido.
-            </p>
+        {/* Encabezado */}
+        <div className="text-center mb-8">
+          <p className="font-sans text-[10px] uppercase tracking-[0.5em] text-[#8C7A6B] mb-4">Celebración de Amor</p>
+          <h1 className="font-['Alex_Brush'] text-5xl md:text-6xl text-[#4A3B31] leading-tight mb-2">
+            Maria Yutzil <br /> & <br /> Gilberto Daniel
+          </h1>
+          <div className="flex items-center justify-center gap-4 my-6">
+            <div className="h-[1px] w-12 bg-[#C4A484]/40"></div>
+            <p className="font-sans text-xs tracking-widest text-[#C4A484] font-medium">21 MARZO 2026</p>
+            <div className="h-[1px] w-12 bg-[#C4A484]/40"></div>
+          </div>
         </div>
 
-        <!-- Botón CTA -->
-        <a href="https://photos.app.goo.gl/r49tV3ZJgiWPYJ7Z6" 
-           target="_blank"
-           class="btn-share inline-block w-full py-5 px-8 rounded-full text-white body-font text-sm font-semibold uppercase tracking-widest mb-10">
-            Subir Fotos Aquí
-        </a>
-
-        <!-- Fecha -->
-        <div class="mt-8">
-            <p class="body-font text-sm tracking-[0.2em] font-medium">21 MARZO 2026</p>
+        {/* Botón Principal (CTA) */}
+        <div className="mb-10">
+          <a 
+            href={albumUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-3 w-full py-5 bg-[#C4A484] text-white rounded-full shadow-lg shadow-[#C4A484]/30 active:scale-95 transition-all duration-200 group"
+          >
+            <Camera className="w-5 h-5" />
+            <span className="font-sans text-sm font-bold uppercase tracking-[0.2em]">Compartir Fotos</span>
+          </a>
+          <p className="text-center mt-4 text-sm italic text-[#8C7A6B]">Toca el botón para abrir el álbum</p>
         </div>
-    </main>
 
-    <footer class="mt-auto py-8 z-20">
-        <p class="body-font text-[9px] uppercase tracking-widest text-[#A8988B]">Con amor, M & D</p>
-    </footer>
+        {/* Guía para iPhone y Android */}
+        <div className="bg-white/70 backdrop-blur-md rounded-3xl p-8 border border-[#EAE3D9] shadow-sm mb-10">
+          <div className="flex items-center gap-2 mb-6 text-[#8C7A6B]">
+            <Info className="w-4 h-4" />
+            <h3 className="font-sans text-[10px] uppercase tracking-widest font-bold">Guía para invitados</h3>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="flex gap-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#FDFBF7] border border-[#C4A484]/20 flex items-center justify-center text-[#C4A484]">
+                <CheckCircle2 className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="font-bold text-sm mb-1">Inicia Sesión</h4>
+                <p className="text-xs leading-relaxed opacity-80 font-sans">Asegúrate de entrar con tu cuenta de Google (Gmail) para poder subir fotos.</p>
+              </div>
+            </div>
 
-    <!-- Script para prevenir scrolls accidentales y mejorar feedback visual -->
-    <script>
-        document.querySelector('.btn-share').addEventListener('click', function(e) {
-            // Un pequeño retraso para que el usuario sienta el feedback del clic antes de salir
-            console.log('Redirigiendo al álbum de Google Photos...');
-        });
-    </script>
-</body>
-</html>
+            <div className="flex gap-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#FDFBF7] border border-[#C4A484]/20 flex items-center justify-center text-[#C4A484]">
+                <Share2 className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="font-bold text-sm mb-1">Usa Safari o Chrome</h4>
+                <p className="text-xs leading-relaxed opacity-80 font-sans">Si estás en iPhone, Safari es la mejor opción para una experiencia fluida.</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#FDFBF7] border border-[#C4A484]/20 flex items-center justify-center text-[#C4A484]">
+                <Heart className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="font-bold text-sm mb-1">¡Listo para compartir!</h4>
+                <p className="text-xs leading-relaxed opacity-80 font-sans">Busca el botón azul de "Añadir" y selecciona tus fotos favoritas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Código QR Secundario */}
+        <div className="text-center">
+          <p className="font-sans text-[9px] uppercase tracking-[0.3em] text-[#A8988B] mb-4">O escanea este código</p>
+          <div className="inline-block p-4 bg-white rounded-2xl border border-[#F0EBE5] shadow-sm">
+            <img 
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(albumUrl)}&color=4A3B31`} 
+              alt="QR Álbum" 
+              className="w-28 h-28"
+            />
+          </div>
+        </div>
+
+        <footer className="mt-16 text-center">
+          <p className="font-['Alex_Brush'] text-2xl opacity-50">Gracias por acompañarnos</p>
+        </footer>
+      </main>
+
+      {/* Carga de fuentes */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap');
+      `}</style>
+    </div>
+  );
+};
+
+export default App;
